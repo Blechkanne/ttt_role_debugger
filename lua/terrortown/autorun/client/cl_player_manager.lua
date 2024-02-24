@@ -25,20 +25,7 @@ function RoleManager:__init()
     self.auto_apply = CreateConVar( "ttt_rolemanager_auto_apply", 1, FCVAR_ARCHIVE, "Automatically activates the roles on the next round if a value is changed.", 0, 1 )
     self.auto_refresh = CreateConVar( "ttt_rolemanager_auto_refresh", 0, FCVAR_ARCHIVE, "Automatically updates the roles, if the debug menu is opened.", 0, 1 )
 
-    self.overhead_role_icons = CreateConVar( "ttt_rolemanager_overhead_icons", 1, FCVAR_ARCHIVE, "Show overhead role icons during round.", 0, 1 )
     -------------- Communication --------------
-
-    -- Request Convars at beginning
-    -- net.Start("RoleManagerRequestBoolConvar")
-    --     net.WriteString("bot_zombie")
-    -- net.SendToServer()
-
-    -- net.Receive("RoleManagerGetBoolConvar", function ()
-    --     local convar = net.ReadString()
-    --     if convar == "bot_zombie" then
-    --         self.moving_bots = net.ReadBool()
-    --     end
-    -- end)
 
     net.Receive("RoleManagerPlayerConnected", function ()
         local name = net.ReadString()
@@ -128,18 +115,11 @@ function RoleManager:__init()
         end)
     end)
 
-    -- Draw player Icons
-    hook.Add("PostDrawTranslucentRenderables", "Draw Overhead Role Icons",  function( bDepth, bSkybox )
-        if self.overhead_role_icons:GetBool() == true and (GAMEMODE.round_state == ROUND_ACTIVE or GAMEMODE.round_state == ROUND_POST) then
-            self:drawOverHeadRoleIcon()
-        end
-    end)
 end
 
 function RoleManager:close()
     hook.Remove("TTTBeginRound", "Update Roles at round start")
     hook.Remove("TTTPrepareRound", "Create Bots before round start")
-    hook.Remove("PostDrawTranslucentRenderables", "Draw Overhead Role Icons")
 end
 
 -----------------------------------------------------
@@ -211,14 +191,10 @@ function RoleManager:setCurrentPlayerRoles()
 end
 
 function RoleManager:applyPlayerRoles(name)
-    --self:clearRolesNextRound()
-    --print("Applying Player Roles")
-    -- Apply
     self.playerList:applyRoles(name)
 end
 
 function RoleManager:applyPlayerRolesNextRound(name)
-    --print("Applying Player Roles next Round")
     self.playerList:applyRoles_nr(name)
     self.apply_next_round = true
 end
@@ -278,18 +254,14 @@ function  RoleManager:resetBotRoles()
 end
 
 function RoleManager:setCurrentBotRoles()
-    --print("---- Setting current Bot Roles")
-    -- TODO: zählt nicht als selectiert -> Rollen müssen isgesamt gesetz werden.
     self.botList:setCurrentRoles()
     self.botList:updateStatus()
 end
 
 
 function RoleManager:applyBotRoles(name)
-    --self:clearRolesNextRound()
     self.botList:spawnEntities(name, true)
 
-    -- TODO: add name for updateStatus?
     self.botList:updateStatus()
 
     timer.Simple(2, function ()
@@ -339,34 +311,4 @@ end
 
 function RoleManager:getTranslatedRoleList()
     return self.roleList:getTranslatedNames()
-end
-
-function RoleManager:getRoleIcons()
-    local icons = {}
-    for i = 1, #self.roleList do
-        icons[i] = self.roleList[i].icon
-    end
-    return icons
-end
-
-function RoleManager:drawOverHeadRoleIcon()
-    -- Players
-    local len = #self.playerList.list
-    for i = 1, len do
-        local role = self.playerList.list[i].currentRole
-        if role and IsValid(self.playerList.list[i].ent) and self.playerList.list[i].ent:Alive() then
-            local rd = self.roleList:getByName(role)
-            DrawOverheadRoleIcon(self.playerList.list[i].ent, rd.iconMaterial, rd.color)
-        end
-    end
-
-    -- Bots
-    len = self.botList.exist_index
-    for i = 1, len do
-        local role = self.botList.list[i].currentRole
-        if role and IsValid(self.botList.list[i].ent) and self.botList.list[i].ent:Alive() and self.botList.list[i].ent:IsSpec() == false then
-            local rd = self.roleList:getByName(role)
-            DrawOverheadRoleIcon(self.botList.list[i].ent, rd.iconMaterial, rd.color)
-        end
-    end
 end

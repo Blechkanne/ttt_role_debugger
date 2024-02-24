@@ -193,9 +193,7 @@ function SKIN:PaintFormButtonIconTTT2(panel, w, h)
 		colorText = ColorAlpha(utilGetDefaultColor(colors.accent), 150)
 	end
 
-	--drawRoundedBoxEx(sizes.cornerRadius, 0, 0, w, h, colorBoxBack, false, true, false, true)
 	drawRoundedBox(sizes.cornerRadius, 1, 1, w - 2, h - 2, colorBox)
-
 	drawFilteredShadowedTexture(pad, pad + shift, w - 2 * pad, h - 2 * pad, panel.material, colorText.a, colorText)
 end
 
@@ -218,7 +216,6 @@ function SKIN:PaintFormButtonLockTTT2(panel, w, h, separate)
 		colorText = ColorAlpha(utilGetDefaultColor(colors.accent), alphaDisabled)
 	elseif panel.Depressed or panel:IsSelected() or panel:GetToggle() then
 		colorBoxBack = colors.settingsBox
-		--colorBox = colors.accentActive
         colorBox = ColorAlpha(Color(230, 77, 77), 255)
 		colorText = ColorAlpha(utilGetDefaultColor(colors.accent), 150)
 		shift = 1
@@ -260,26 +257,11 @@ function SKIN:PaintLabelTTT2(panel, w, h)
 		TEXT_ALIGN_CENTER,
 		TEXT_ALIGN_CENTER
 	)
-
-    -- local colorText = colors.settingsText
-    -- local colorBox = colors.settingsBox
-
-	-- drawSimpleText(
-	-- 	TryT(panel:GetText()),
-	-- 	panel:GetFont(),
-	-- 	0.5 * w,
-	-- 	0.5 * h,
-	-- 	utilGetChangedColor(colors.default, 40),
-	-- 	TEXT_ALIGN_CENTER, -- TEXT_ALIGN_LEFT
-	-- 	TEXT_ALIGN_CENTER
-	-- )
 end
 
 
 
 function SKIN:PaintMenuTTT2(panel, w, h)
-	--drawBox(0, 0, w, h, colors.content)
-    
     local colorBox = colors.settingsBox
 	local colorHandle = colors.handle
 
@@ -306,14 +288,10 @@ function SKIN:PaintMenuOptionTTT2(panel, w, h)
 	local shift = 0
 	local pad = 6
 
-
     if not panel:IsEnabled() and not panel.selected then
-		--colorBoxBack = ColorAlpha(colors.settingsBox, alphaDisabled)
-		--colorBox = ColorAlpha(colors.settingsBox, alphaDisabled)
         colorText = ColorAlpha(colorText, alphaDisabled)
     elseif panel.selected then
-        --colorBox = ColorAlpha(colors.accentHover, 50)
-        colorBoxBack = ColorAlpha(colors.accentHover, 200)--colors.settingsBox
+        colorBoxBack = ColorAlpha(colors.accentHover, 200)
 
         drawRoundedBoxEx(sizes.cornerRadius, 0, 0, w, h, colorBoxBack, false, true, false, true)
 		drawRoundedBox(sizes.cornerRadius, 2, 2, w - 4, h - 4, colorBox)
@@ -321,7 +299,6 @@ function SKIN:PaintMenuOptionTTT2(panel, w, h)
         colorText = ColorAlpha(utilGetActiveColor(colorText), 200)
     end
     if panel.Hovered then
-        --colorBox = colors.accentHover
         colorBoxBack = colors.settingsBox
 
         drawRoundedBoxEx(sizes.cornerRadius, 0, 0, w, h, colorBoxBack, false, true, false, true)
@@ -330,22 +307,16 @@ function SKIN:PaintMenuOptionTTT2(panel, w, h)
 		colorText = ColorAlpha(utilGetHoverColor(colorText), 200)
 	end
 
-    --drawRoundedBox(sizes.cornerRadius, 1, 1, w - 2, h - 2, colorBox)
-    
     drawSimpleText(
 		TryT(panel:GetText()),
 		panel:GetFont(),
 		0.5 * w,
 		0.5 * h,
-		colorText, --utilGetChangedColor(colors.default, 40),
-		TEXT_ALIGN_CENTER, -- TEXT_ALIGN_LEFT
+		colorText,
+		TEXT_ALIGN_CENTER,
 		TEXT_ALIGN_CENTER
 	)
-
 end
-
-
-
 
 -- REGISTER DERMA SKIN
 derma.DefineSkin(SKIN.Name, "TTT2 default skin for all vgui elements", SKIN)

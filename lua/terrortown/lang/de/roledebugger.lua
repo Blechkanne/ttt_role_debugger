@@ -44,24 +44,15 @@ L["debugging_roles_settings_auto_refresh_help"] = [[
 Aktuallisiert die Rollen automatisch zu den gerade festgelegten, 
 wenn das Debugging Menü geöffnet wird.]]
 
-L["debugging_roles_settings_overhead_icon"] = "Überkopf Rollen Icons"
-L["debugging_roles_settings_overhead_icon_help"] = [[
-Zeigt die Rollen der Spieler mit überkopf Icons während der Runde an.]]
-
-
-
 ----------------------------
 ---- Debugging Classes -----
 ----------------------------
 L["submenu_debugging_classes_title"] = "Klassen"
 
-
-
 ----------------------------
 ---- Debugging Weapons -----
 ----------------------------
 L["submenu_debugging_weapons_title"] = "Waffen"
-
 
 
 ----------------------------

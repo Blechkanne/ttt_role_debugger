@@ -130,8 +130,6 @@ local function PopulateRolePanel(parent)
                 roleManager:setPlayerLocked(playerList[i], false)
             end,
             OnRemove = function()
-                --roleManager:setPlayerLocked(playerList[i], false)
-                --print("Removing hook for", playerList[i] )
                 hook.Remove("UpdateRoleSelection_" .. playerList[i], "Update Role Selection " .. playerList[i])
             end,
         })
@@ -187,12 +185,6 @@ local function PopulateRolePanel(parent)
     local function getAddedBotListsEntries(len)
         local index = roleManager:getBotLen()
         roleManager:changeBotListLen(len)
-
-        -- TODO: 
-        --print("index:", index)
-        --print("whole list:", unpack(roleManager:getBotList()))
-        --print("return:", unpack( {unpack(roleManager:getBotList(), index + 1)}))
-
         return {unpack(roleManager:getBotList(), index + 1)}
     end
 
@@ -294,15 +286,6 @@ local function PopulateRolePanel(parent)
         label = "debugging_roles_settings_auto_apply_help"
     })
 
-    -- formSettings:MakeCheckBox({
-    --     label = LANG.GetTranslation("debugging_roles_settings_auto_apply"),
-    --     initial = roleManager.auto_apply:GetBool(),
-    --     default = roleManager.auto_apply:GetBool(),
-    --     OnChange = function(_, value)
-    --         roleManager.auto_apply = value
-    --     end,
-    -- })
-
     formSettings:MakeCheckBox({
         label = LANG.GetTranslation("debugging_roles_settings_auto_apply"),
         convar = "ttt_rolemanager_auto_apply", --roleManager.auto_apply,
@@ -312,36 +295,9 @@ local function PopulateRolePanel(parent)
         label = "debugging_roles_settings_auto_refresh_help"
     })
 
-    -- formSettings:MakeCheckBox({
-    --     label = LANG.GetTranslation("debugging_roles_settings_auto_refresh"),
-    --     initial = roleManager.auto_refresh,
-    --     default = roleManager.auto_refresh,
-    --     OnChange = function(_, value)
-    --         roleManager.auto_refresh = value
-    --     end,
-    -- })
-
     formSettings:MakeCheckBox({
         label = LANG.GetTranslation("debugging_roles_settings_auto_refresh"),
         convar = "ttt_rolemanager_auto_refresh", --roleManager.auto_refresh,
-    })
-
-    formSettings:MakeHelp({
-        label = "debugging_roles_settings_overhead_icon_help"
-    })
-
-    -- formSettings:MakeCheckBox({
-    --     label = LANG.GetTranslation("debugging_roles_settings_overhead_icon_help")
-    --     initial = roleManager.overhead_role_icons,
-    --     default = roleManager.overhead_role_icons,
-    --     OnChange = function(_, value)
-    --         roleManager.overhead_role_icons = value
-    --     end,
-    -- })
-
-    formSettings:MakeCheckBox({
-        label = LANG.GetTranslation("debugging_roles_settings_overhead_icon_help"),
-        convar = "ttt_rolemanager_overhead_icons", --roleManager.overhead_role_icons,
     })
 
     -- update List Entries
