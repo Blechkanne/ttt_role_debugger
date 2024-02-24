@@ -4,8 +4,6 @@ if SERVER then
     resource.AddFile("materials/vgui/ttt/vskin/icon_lock_closed.vmt")
     resource.AddFile("materials/vgui/ttt/vskin/icon_lock_open.vmt")
     resource.AddFile("materials/vgui/ttt/vskin/icon_random.vmt")
-    --resource.AddFile("materials/vgui/ttt/vskin/helpscreen/icon_lock_closed_large.vmt")
-    --resource.AddFile("materials/vgui/ttt/vskin/helpscreen/icon_lock_open_large.vmt")
 end
 
 local additionalTTTFiles = {
@@ -17,9 +15,6 @@ local additionalTTTFiles = {
     cl_vskin__vgui__dcontainer = {file = "cl_vskin/vgui/dcontainer_ttt2.lua", on = "client"},
     cl_vskin__vgui__dform_extended = {file = "cl_vskin/vgui/dform_ttt2_extended.lua", on = "client"},
 }
-
-
---hook.Add("TTT2ModifyFiles", "Add additional Files", function(TTTFiles)
 
 if TTTFiles ~= nil then
     table.Merge(TTTFiles, additionalTTTFiles)

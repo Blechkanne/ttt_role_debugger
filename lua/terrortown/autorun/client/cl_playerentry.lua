@@ -51,15 +51,11 @@ function PlayerEntry:applyRole()
     local role_name = self.role
 
     --print("[Apply Role] " .. role_name .. "   to player " .. self.name .. "   Current role:", tostring(self.currentRoles))
-    if not IsValid(self.ent) then
-        --print("The Players " .. self.name .. " entity does not exist.")
+    if not IsValid(self.ent) then return
     elseif GetRoundState() == 1 or GetRoundState() == 2 then
-        --print("The Round has not yet been started! Applying role next round.")
         self:applyRole_nr()
-    elseif not self.ent:Alive() then
-        --print("Player is not alive.")
-    elseif self.currentRole == role_name then
-        --print("Player already has the role")
+    elseif not self.ent:Alive() then return
+    elseif self.currentRole == role_name then return
     else
         net.Start("RoleManagerApplyRole")
             net.WriteEntity(self.ent)
@@ -72,9 +68,7 @@ end
 -- applys role to the entity of the player next round
 function PlayerEntry:applyRole_nr()
     local role_name = self.role
-    --print("[Apply Role Next Round]  " .. role_name .. "    to player " .. self.name .. "    Current role:", tostring(self.currentRole))
-    if not IsValid(self.ent) then
-        --print("The Players " .. self.name .. " entity does not exist.")
+    if not IsValid(self.ent) then return
     else
         net.Start("RoleManagerApplyRoleNextRound")
             net.WriteEntity(self.ent)
@@ -112,7 +106,7 @@ setmetatable(BotEntry, {
 -- the spawn status and the delete status 
 function BotEntry:__init(data)
     PlayerEntry.__init(self, data)
-    self.currentName = data.currentName or nil  -- TODO: Wahrscheinlich wieder entfernen, wird sowieso nicht richtig benutzt.
+    self.currentName = data.currentName or nil 
     self.spawn = data.spawn or false
     self.delete = data.delete or false
 end
@@ -154,7 +148,6 @@ end
 
 -- spawns a new entity of the bot
 function BotEntry:spawnEntity(spawn_name, this_round)
-    --print("Spawn Bot: " .. spawn_name)
     self.currentName = spawn_name
     if this_round == false then
         net.Start("RoleManagerSpawnBot")
@@ -170,9 +163,7 @@ function BotEntry:spawnEntity(spawn_name, this_round)
 end
 
 function BotEntry:respawnEntity()
-    --self.currentName = spawn_name TODO: Muss an das machen? Eigentlich wird die Current Name List beim Spawn gesetzt.
     local spawn_name = self.name
-    --print("Repawn Bot: " .. self.name)
     net.Start("RoleManagerRespawnBot")
         net.WriteEntity(self.ent)
         net.WriteString(spawn_name)
@@ -181,7 +172,6 @@ end
 
 -- deletes the entity of the bot entry
 function BotEntry:deleteEntity()
-    --print("Remove Bot: " .. self.name)
     self.currentName = nil
     net.Start("RoleManagerDeleteBot")
         net.WriteEntity(self.ent)
@@ -192,7 +182,6 @@ end
 
 
 -- enables or disables the moving status of a bot 
--- TODO: status and function need to be implemented
 function BotEntry:setMoving()
 
 end

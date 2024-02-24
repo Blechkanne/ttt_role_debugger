@@ -36,7 +36,6 @@ function PANEL:AddPanel( pnl )
 
 end
 
--- TODO: Add Column
 function PANEL:AddColumn( name )
     local column = vgui.Create( "DListLayout", self)
     column.Paint = function( p, w, h )
@@ -53,7 +52,6 @@ function PANEL:AddColumn( name )
 
     column:Add( title )
 
-    -- TODO: Das ersetzen
     column:SetTall(300)
     column:SetWide(200)
 
@@ -91,23 +89,6 @@ function PANEL:AddOption( strText, funcFunction )
 
 end
 
--- function PANEL:AddCVar( strText, convar, on, off, funcFunction )
-
--- 	local pnl = vgui.Create( "DMenuOptionCVar", self )
--- 	pnl:SetMenu( self )
--- 	pnl:SetText( strText )
--- 	if ( funcFunction ) then pnl.DoClick = funcFunction end
-
--- 	pnl:SetConVar( convar )
--- 	pnl:SetValueOn( on )
--- 	pnl:SetValueOff( off )
-
--- 	self:AddPanel( pnl )
-
--- 	return pnl
-
--- end
-
 function PANEL:AddSpacer( strText, funcFunction )
 
 	local pnl = vgui.Create( "DPanel", self )
@@ -122,20 +103,6 @@ function PANEL:AddSpacer( strText, funcFunction )
 
 end
 
--- function PANEL:AddSubMenu( strText, funcFunction )
-
--- 	local pnl = vgui.Create( "DMenuOption", self )
--- 	local SubMenu = pnl:AddSubMenu( strText, funcFunction )
-
--- 	pnl:SetText( strText )
--- 	if ( funcFunction ) then pnl.DoClick = funcFunction end
-
--- 	self:AddPanel( pnl )
-
--- 	return SubMenu, pnl
-
--- end
-
 function PANEL:Hide()
 
 	local openmenu = self:GetOpenSubMenu()
@@ -147,36 +114,6 @@ function PANEL:Hide()
 	self:SetOpenSubMenu( nil )
 
 end
-
--- function PANEL:OpenSubMenu( item, menu )
-
--- 	-- Do we already have a menu open?
--- 	local openmenu = self:GetOpenSubMenu()
--- 	if ( IsValid( openmenu ) && openmenu:IsVisible() ) then
-
--- 		-- Don't open it again!
--- 		if ( menu && openmenu == menu ) then return end
-
--- 		-- Close it!
--- 		self:CloseSubMenu( openmenu )
-
--- 	end
-
--- 	if ( !IsValid( menu ) ) then return end
-
--- 	local x, y = item:LocalToScreen( self:GetWide(), 0 )
--- 	menu:Open( x - 3, y, false, item )
-
--- 	self:SetOpenSubMenu( menu )
-
--- end
-
--- function PANEL:CloseSubMenu( menu )
-
--- 	menu:Hide()
--- 	self:SetOpenSubMenu( nil )
-
--- end
 
 function PANEL:Paint( w, h )
 
@@ -225,32 +162,11 @@ function PANEL:PerformLayout( w, h )
         col:SetTall(h)
     end
 
-	--for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
-    -- 	pnl:InvalidateLayout( true )
-	-- 	w = math.max( w, pnl:GetWide() )
-	-- end
-
     w = math.max(w, self:GetMinimumWidth())
     h = math.min(h, self:GetMaxHeight())
 
 	self:SetWide( w + 2 )
     self:SetTall( h + 2 )
-
-	--local y = 0 -- for padding
-
-	-- for k, pnl in pairs( self:GetCanvas():GetChildren() ) do
-
-	-- 	pnl:SetWide( w )
-	-- 	pnl:SetPos( 0, y )
-	-- 	pnl:InvalidateLayout( true )
-
-	-- 	y = y + pnl:GetTall()
-
-	-- end
-
-	--y = math.min( y, self:GetMaxHeight() )
-
-	--self:SetTall( y )
 
 	derma.SkinHook( "Layout", "Menu", self )
 

@@ -49,7 +49,6 @@ local function MakeReset(parent, separate)
     return reset
 end
 
--- TODO: Button implementieren
 local function MakeLock(parent, separate)
     local lock = vgui.Create("DButtonTTT2_toggle", parent)
     lock:SetSkin("ttt2_default_extended")
@@ -142,10 +141,6 @@ function PANEL:MakeComboBox(data)
         right.OnRemove = data.OnRemove
     end
 
-    -- TODO: sollte so nochaml versucht werden zu verwenden.
-    -- if isfunction(data.UpdateSelection) then
-    --     right.UpdateSelection = data.UpdateSelection
-    -- end
 
     right:SetConVar(data.convar)
     right:SetTall(32)
@@ -244,11 +239,6 @@ function PANEL:MakeComboBox_Roles(data)
     if isfunction(data.OnRemove) then
         right.OnRemove = data.OnRemove
     end
-
-    -- TODO: sollte so nochaml versucht werden zu verwenden.
-    -- if isfunction(data.UpdateSelection) then
-    --     right.UpdateSelection = data.UpdateSelection
-    -- end
 
     right:SetConVar(data.convar)
     right:SetTall(32)
@@ -366,7 +356,6 @@ function PANEL:MakeButtonSlider(data)
             end
 
             if isfunction(data.OnReset) then
-                -- TODO: choose correct parameters in the function
                 data.OnReset()
             end
 
@@ -449,7 +438,6 @@ function PANEL:MakeDoubleButton(data)
         reset = MakeReset(self, true)
 
         reset.DoClick = function(slf)
-            -- TODO: choose correct parameters in the function
             data.OnReset()
         end
     else
@@ -663,9 +651,6 @@ function PANEL:AddItem(left, right, reset, lock, separate, separate_lock )
     panel:InvalidateLayout()
 
     local size = 350
-    -- if symmetric and not IsValid(reset) then
-    --     size = 370
-    -- end
 
     if IsValid(reset) then
         reset:SetParent(panel)
