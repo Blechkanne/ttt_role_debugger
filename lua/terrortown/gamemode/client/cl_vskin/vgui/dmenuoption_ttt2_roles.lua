@@ -29,42 +29,6 @@ function PANEL:GetText()
 	return self.text
 end
 
--- function PANEL:SetSubMenu( menu )
-
--- 	self.SubMenu = menu
-
--- 	if ( !IsValid( self.SubMenuArrow ) ) then
-
--- 		self.SubMenuArrow = vgui.Create( "DPanel", self )
--- 		self.SubMenuArrow.Paint = function( panel, w, h ) derma.SkinHook( "Paint", "MenuRightArrow", panel, w, h ) end
-
--- 	end
-
--- end
-
--- function PANEL:AddSubMenu()
-
--- 	local SubMenu = DermaMenu( true, self )
--- 	SubMenu:SetVisible( false )
--- 	SubMenu:SetParent( self )
-
--- 	self:SetSubMenu( SubMenu )
-
--- 	return SubMenu
-
--- end
-
--- function PANEL:OnCursorEntered()
-
--- 	if ( IsValid( self.ParentMenu ) ) then
--- 		self.ParentMenu:OpenSubMenu( self, self.SubMenu )
--- 		return
--- 	end
-
--- 	self:GetParent():OpenSubMenu( self, self.SubMenu )
-
--- end
-
 function PANEL:OnCursorExited()
 end
 
@@ -146,12 +110,6 @@ function PANEL:SetIcon( icon, color )
 		self.roleIcon = vgui.Create( "SimpleIcon", self )
 	end
 
-    -- TODO: RIchtig überprüfen, ob das Icon vohanden ist
-    -- SimpleRoleIcon
-    --self.roleIcon:SetIcon("vgui/ttt/dynamic/icon_base")
-    --self.roleIcon.Icon:SetImage2("vgui/ttt/dynamic/icon_base_base")
-    --self.roleIcon.Icon:SetImageOverlay("vgui/ttt/dynamic/icon_base_base_overlay")
-
     if icon ~= "" then
         self.roleIcon:SetIcon( icon )
         if color then
@@ -179,23 +137,8 @@ function PANEL:PerformLayout( w, h )
 	local w = math.max( self:GetParent():GetWide(), self:GetWide() )
 
 	self:SetSize( w, 45 )
-
-	-- if ( IsValid( self.SubMenuArrow ) ) then
-
-	-- 	self.SubMenuArrow:SetSize( 15, 15 )
-	-- 	self.SubMenuArrow:CenterVertical()
-	-- 	self.SubMenuArrow:AlignRight( 4 )
-
-	-- end
-
 	DButton.PerformLayout( self, w, h )
 
 end
-
--- function PANEL:Paint(w, h)
--- 	derma.SkinHook("Paint", "Button", self, w, h)
-
--- 	return false
--- end
 
 derma.DefineControl( "DMenuOptionTTT2_roles", "Menu Option Line for Role Selection", PANEL, "DButton" )

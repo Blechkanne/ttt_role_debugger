@@ -60,16 +60,14 @@ function PlayerList:setCurrentRoles()
 
     for i = 1, len do
         local old_role = self.list[i].role
-        --print("Player:", self.list[i].name, "hat role", self.list[i].role, "ingame:", self.list[i].currentRole, "number:", self.list[i].ent:GetSubRole())
-        --self.list[i].role = roles:GetByIndex(self.list[i].ent:GetSubRole()).name
         self.list[i].role = self.list[i].currentRole
+
         if old_role ~= self.list[i].role then
             self:displayRole(self.list[i].name)
         end
     end
 end
 
--- TODO: Aus der PlayerList woanders hin verschieben
 -- displays currently selected role for alle Player activ in the 
 function PlayerList:displayAllRoles()
     local len = self.index or #self.list
@@ -78,7 +76,6 @@ function PlayerList:displayAllRoles()
     end
 end
 
--- TODO: Aus der PlayerList woanders hin verschieben
 function PlayerList:displayRole(name)
     hook.Run("UpdateRoleSelection_" .. name)
 end
@@ -172,7 +169,6 @@ end
 
 -- add Player to the HumanList and add entry in revList with given index
 function HumanList:addPlayer(name, ent, role)
-    --print("add Player:", name, "with role:", role)
     if not self.revList[name] then
         local id = #self.list + 1
         self.list[id] = PlayerEntry({
@@ -207,7 +203,6 @@ function HumanList:refresh()
         end
     end
 
-    -- TODO: DEBUGGEN
     if #players <= #self.list then
         for _,p in pairs(self.list) do
             local i = findValueInTable(p.name, players, Nick) 
@@ -300,7 +295,6 @@ function BotList:getCurrentNameList()
     return self.currentNameList
 end
 
--- TODO: DEBUGGEN
 -- deletes the old currentNameList and fills it with newly updated names in game
 -- updates the currentName for every ListEntry
 function BotList:updateCurrentNames()
@@ -318,7 +312,6 @@ function BotList:setLen(len)
     self.index = len
 end
 
--- todo: Add Name Parameter
 -- updates the spawn and delet status of the Bot entries according to the current position of the index
 function BotList:updateStatus() -- oder updateSpawn oder refresh
     self.exist_index = #player:GetBots()
@@ -365,20 +358,15 @@ function BotList:addEntity(cur_name)
     -- If the bot was created with the RoleManager and an entry in addNewEntity was created
     -- the new entity is added to the BotList Entry and the cur_name is removed from the addNewEntity List
     if self.addNewEntity[cur_name] and ent ~= nil then
-        -- print("Add Entity from addNewEntityList", cur_name, self.addNewEntity[cur_name])
         local i = self.revList[self.addNewEntity[cur_name]]
         self.list[i]:addEntity(ent, cur_name)
         self.addNewEntity[cur_name] = nil
         self.currentNameList[cur_name] = self.list[i].name
 
-    -- TODO: vielleicht muss man hier noch ein bisschen mehr machen, 
-    -- als einfach nur den nächsten exist_index + 1 zu verwenden 
-    -- z.B. prüfen, ob der Bot schon besetzt ist.
     elseif not self.currentNameList[cur_name] and ent ~= nil then
         local i = getArrayLen(self.currentNameList) + 1
         self.list[i]:addEntity(ent, cur_name)
         self.currentNameList[cur_name] = self.list[i].name -- add index to current name list
-        --print("Entity", self.list[i].ent, "of current bot:", self.list[i].name)
     end
 end
 
@@ -421,14 +409,12 @@ end
 
 function BotList:respawnEntities(name)
     if name then
-        --print("ReSpawn Enity:")
         self.list[self.revList[name]]:respawnEntity()
         self.addNewEntity[name] = name
     else
         for i = 1, self.exist_index do
-            local name = self.list[i].name 
+            local name = self.list[i].name
             if self.list[i].name ~= self.list[i].currentName then
-                --print(i, "Replacing: ", self.list[i].currentName, "by: ", name)
                 self.list[i]:respawnEntity()
                 self.addNewEntity[name] = name
             end
@@ -440,24 +426,19 @@ end
 -- Ansonsten wird eine Liste aufgefüllt, die zu begin der nächsten Vorbereitungsphase abgearbeitet wird.
 function BotList:applyRoles_nr(name)
     if name then
-        -- TODO: hier muss überprüft werden, ob der eintrag schon in der liste ist
         local i = self.revList[name]
         if IsValid(self.list[i].ent) then
-            --print("Apply Role next round for:  " .. name )
             self.list[i]:applyRole_nr()
         else
-            --print("Entity not created yet: store in table for next round for: " .. name)
             self.processNextRound[#self.processNextRound + 1] = self.list[i]
         end
     else
         self.processNextRound = {}
         local len = self.index or #self.list
-        --print("Apply Role next round for all.")
         for i = 1, len do
             if IsValid(self.list[i].ent) then
                 self.list[i]:applyRole_nr()
             else
-                --print("Entity not created yet: store in table for next round.")
                 self.processNextRound[#self.processNextRound + 1] = self.list[i]
             end
         end

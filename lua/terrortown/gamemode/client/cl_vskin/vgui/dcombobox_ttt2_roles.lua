@@ -78,19 +78,6 @@ function PANEL:GetOptionData(id)
 	return self.data[id]
 end
 
----
--- @param any data
--- @return any
--- @realm client
--- function PANEL:GetOptionTextByData(data)
--- 	for id, dat in pairs(self.data) do
--- 		if dat ~= data and dat ~= tonumber(data) then continue end
-
--- 		return self:GetOptionText(id)
--- 	end
-
--- 	return data
--- end
 
 ---
 -- @ignore
@@ -218,12 +205,6 @@ function PANEL:AddCategory(name, roles, icons, colors, data)
 			self.data[i + j] = data[j]
 		end
 	end
-
-	-- if select then
-	-- 	self:ChooseOption(value, i)
-	-- end
-
-	--return i
 end
 
 ---
@@ -364,21 +345,6 @@ function PANEL:CloseMenu()
 	self.menu:Remove()
 end
 
--- ---
--- -- @realm client
--- function PANEL:CheckConVarChanges()
--- 	if not self.m_strConVar then return end
-
--- 	local strValue = GetConVar(self.m_strConVar):GetString()
-
--- 	if self.m_strConVarValue == strValue then return end
-
--- 	self.m_strConVarValue = strValue
-
--- 	self:SetValue(self:GetOptionTextByData(self.m_strConVarValue))
--- end
-
----
 -- @ignore
 function PANEL:Think()
 	--self:CheckConVarChanges()

@@ -1,15 +1,12 @@
----
 -- @class PANEL
 -- @section DButtonTTT2
 
 local PANEL = {}
 
----
 -- @accessor boolean
 -- @realm client
 AccessorFunc(PANEL, "m_bBorder", "DrawBorder", FORCE_BOOL)
 
----
 -- @ignore
 function PANEL:Init()
 	self:SetIsToggle(true) -- enables toggeling
@@ -55,13 +52,6 @@ function PANEL:SetIntitial(bool)
 end
 
 
--- function PANEL:Toggle()
--- 	if not self:GetIsToggle() then return end
-
--- 	self:SetToggle(not self:GetToggle())
--- 	self:OnToggled(self:GetToggle())
--- end
-
 -- Switches the state of the button to the given state,
 -- but only if it has a different state at the moment
 -- @param boolean state: the state the button should be switched into
@@ -72,21 +62,17 @@ function PANEL:OnToggled(state)
 	elseif state == true then
 		self:OnLocked()
 		self.material = self.material_on
-	else
-		--print("Toggled but state did not change!")
 	end
 end
 
 function PANEL:DoUnlock()
 	if self:GetToggle() != false then
-		--self:OnToggled(false)
 		self:Toggle()
 	end
 end
 
 function PANEL:DoLock()
 	if self:GetToggle() != true then
-		--self:OnToggled(true)
 		self:Toggle()
 	end
 end
@@ -96,11 +82,9 @@ end
 -- @ignore
 function PANEL:Paint(w, h)
 	derma.SkinHook("Paint", "ButtonTTT2", self, w, h)
-
 	return false
 end
 
----
 -- @param string strName
 -- @param string strArgs
 -- @realm client
@@ -110,7 +94,6 @@ function PANEL:SetConsoleCommand(strName, strArgs)
 	end
 end
 
----
 -- @ignore
 function PANEL:SizeToContents()
 	local w, h = self:GetContentSize()

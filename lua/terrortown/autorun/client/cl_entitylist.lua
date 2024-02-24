@@ -96,9 +96,6 @@ function EntryList:getNames()
     for i, n in pairsByKey(self.revList, len) do
         names[i] = n
     end
-    -- for i = 1, len do
-    --     names[i] = self.list[i].name
-    -- end
     return names
 end
 
@@ -139,7 +136,6 @@ setmetatable(RoleList, {
 -- initializes RoleList with an entry (random) 
 -- and the roles that are available on the server
 -- also adds a translation to every entry and creates an reversed list
--- TODO: Einie eigene Klasse schreiben, damit jeder Eintrag beim Initialisieren überssetz wird und ein Icon zugewiesen wird
 function RoleList:__init(init)
     EntryList.__init(self, init)
 
@@ -192,7 +188,6 @@ end
 
 -- get a list with the translated 
 -- return: (table) translated names (not in alphabetical order)
--- TODO: should be alphabeticall
 function RoleList:getTranslatedNames()
     local names = {}
 
@@ -210,7 +205,6 @@ function RoleList:getCategories()
     return self.categories
 end
 
--- TODO: Schöner schreiben
 function RoleList:getRoleCategory(role)
     if (role.name == RD_ROLE_RANDOM.name) then
         return RD_ROLE_RANDOM.id, RD_ROLE_RANDOM.index
@@ -220,7 +214,6 @@ function RoleList:getRoleCategory(role)
     local baserole = role:GetBaseRole()
 
     if (team == TEAM_INNOCENT or team == TEAM_TRAITOR) and (baserole <= 2) then
-        --print("STD Role:", role.name, "Baserole:", baserole)
         return baserole, baserole + 1
     elseif (baserole == ROLE_CUPID) then
         return ROLE_INNOCENT, ROLE_INNOCENT + 1
@@ -229,13 +222,10 @@ function RoleList:getRoleCategory(role)
     elseif (baserole == ROLE_SIDEKICK) then
         return RD_ROLE_KILLERS.id, RD_ROLE_KILLERS.index
     elseif (baserole == role.index and (team == TEAM_NONE or team == TEAM_UNASSIGNED or team == TEAM_JESTER or team == TEAM_INNOCENT)) or (baserole == ROLE_MARKER) then
-        --print("NEUTRAL Role:", role.name, "Baserole:", baserole)
         return RD_ROLE_NEUTRAL.id, RD_ROLE_NEUTRAL.index
     elseif (baserole == role.index and team ~= TEAM_NONE and team ~= TEAM_UNASSIGNED) or (baserole == ROLE_MIMIC or baserole == ROLE_PIRATE or baserole == ROLE_NECROMANCER) then
-        --print("KILLER Role:", role.name, "Baserole:", baserole)
         return RD_ROLE_KILLERS.id, RD_ROLE_KILLERS.index
     else
-        --print("UNKNOWN Role:", role.name, "Baserole:", baserole)
         return RD_ROLE_RANDOM.id, RD_ROLE_RANDOM.index
     end
 end

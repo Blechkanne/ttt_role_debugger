@@ -119,7 +119,6 @@ function SKIN:PaintFrameTTT2(panel, w, h)
 end
 
 
----
 -- @param Panel panel
 -- @param number w
 -- @param number h
@@ -162,7 +161,6 @@ function SKIN:PaintButtonTTT2(panel, w, h)
 	)
 end
 
----
 -- @param Panel panel
 -- @param number w
 -- @param number h
@@ -196,8 +194,6 @@ function SKIN:PaintFormButtonIconTTT2(panel, w, h)
 	drawRoundedBox(sizes.cornerRadius, 1, 1, w - 2, h - 2, colorBox)
 	drawFilteredShadowedTexture(pad, pad + shift, w - 2 * pad, h - 2 * pad, panel.material, colorText.a, colorText)
 end
-
-
 
 function SKIN:PaintFormButtonLockTTT2(panel, w, h, separate)
     local colorBoxBack = colors.settingsBox
@@ -233,8 +229,6 @@ function SKIN:PaintFormButtonLockTTT2(panel, w, h, separate)
 	drawFilteredShadowedTexture(pad, pad + shift, w - 2 * pad, h - 2 * pad, panel.material, colorText.a, colorText)
 end
 
-
----
 -- @param Panel panel
 -- @param number w
 -- @param number h
