@@ -898,7 +898,6 @@ function PANEL:MakeHelp(data)
     local left = vgui.Create("DLabelTTT2", self)
 
     left:SetText(data.label)
-    left:SetParams(data.params)
     left:SetContentAlignment(7)
     left:SetAutoStretchVertical(true)
 
@@ -913,8 +912,7 @@ function PANEL:MakeHelp(data)
 
     -- make sure the height is based on the amount of text inside
     left.PerformLayout = function(slf, w, h)
-        local textTranslated = LANG.GetParamTranslation(slf:GetText(), slf:GetParams())
-        local textWrapped = draw.GetWrappedText(textTranslated, w - 2 * slf.paddingX, slf:GetFont())
+        local textWrapped = draw.GetWrappedText(slf:GetText(), w - 2 * slf.paddingX, slf:GetFont())
         local _, heightText = draw.GetTextSize("", slf:GetFont())
         slf:SetSize(w, heightText * #textWrapped + 2 * slf.paddingY)
     end
